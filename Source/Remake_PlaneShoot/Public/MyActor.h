@@ -10,6 +10,7 @@ class UBoxComponent;
 class UStaticMeshComponent;
 class UProjectileMovementComponent;
 
+
 UCLASS()
 class REMAKE_PLANESHOOT_API AMyActor : public AActor
 {
@@ -35,4 +36,14 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component")
 	UProjectileMovementComponent* Movement;
+
+	UFUNCTION()
+	void ProcessBeginOverlap(AActor* OverlappedActor, AActor* OtherActor);
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void CallCPPToBP();
+
+	UFUNCTION(BlueprintNativeEvent)
+	void CallCPPToBPButCPP();
+	//void CallCPPToBPButCPP_Implementation();
 };

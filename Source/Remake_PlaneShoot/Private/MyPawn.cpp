@@ -64,6 +64,7 @@ AMyPawn::AMyPawn()
 
 	MyActorComponent = CreateDefaultSubobject<UMyActorComponent>(TEXT("MyActorComponent"));
 
+	//#include 
 	static ConstructorHelpers::FClassFinder<AMyActor> RocketClass(TEXT("/Script/Engine.Blueprint'/Game/Airplane/Blueprint/CPP/BP_MyActor.BP_MyActor_C'"));
 	if (!RocketClass.Succeeded())
 	{
@@ -71,7 +72,7 @@ AMyPawn::AMyPawn()
 	}
 	else
 	{
-		RocketTemplate = RocketClass.Class;
+		RocketTemplate = RocketClass.Class; //BlueprintClass 
 	}
 
 }
@@ -80,7 +81,6 @@ AMyPawn::AMyPawn()
 void AMyPawn::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame

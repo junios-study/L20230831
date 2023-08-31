@@ -15,6 +15,8 @@ AMyActor::AMyActor()
 	Box = CreateDefaultSubobject<UBoxComponent>(TEXT("Box"));
 	RootComponent = Box;
 	Box->SetBoxExtent(FVector(20, 20, 20));
+	Box->SetGenerateOverlapEvents(true);
+
 
 	Body = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Body"));
 	Body->SetupAttachment(RootComponent);
@@ -30,6 +32,11 @@ void AMyActor::BeginPlay()
 	Super::BeginPlay();
 
 	SetLifeSpan(3.f);
+
+	OnActorBeginOverlap.AddDynamic(this, &AMyActor::ProcessBeginOverlap);
+	//OnActorBeginOverlap.AddDynamic(this, &AMyActor::ProcessBeginOverlap);
+	//OnActorBeginOverlap.RemoveDynamic(this, &AMyActor::ProcessBeginOverlap);
+	//OnActorBeginOverlap.RemoveAll(this);
 	
 }
 
@@ -37,6 +44,19 @@ void AMyActor::BeginPlay()
 void AMyActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+}
+
+void AMyActor::ProcessBeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Overlap begin"));
+	CallCPPToBP();
+	//CallCPPToBPButCPP();
+}
+
+void AMyActor::CallCPPToBPButCPP_Implementation()
+{
+	UE_LOG(LogTemp, Warning, TEXT("CPP Execute"));
 
 }
 
