@@ -6,6 +6,10 @@
 #include "GameFramework/Actor.h"
 #include "MyActor.generated.h"
 
+class UBoxComponent;
+class UStaticMeshComponent;
+class UProjectileMovementComponent;
+
 UCLASS()
 class REMAKE_PLANESHOOT_API AMyActor : public AActor
 {
@@ -23,4 +27,12 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component")
+	UBoxComponent* Box;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component")
+	UStaticMeshComponent* Body;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Component")
+	UProjectileMovementComponent* Movement;
 };

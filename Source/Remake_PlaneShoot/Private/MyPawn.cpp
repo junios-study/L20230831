@@ -13,6 +13,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include "MyActor.h"
 
 // Sets default values
 AMyPawn::AMyPawn()
@@ -56,11 +57,22 @@ AMyPawn::AMyPawn()
 
 	Arrow = CreateDefaultSubobject<UArrowComponent>(TEXT("Arrow"));
 	Arrow->SetupAttachment(Box);
+	Arrow->AddLocalOffset(FVector(0, 0, 300.0f));
+
 
 	Movement = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("Movement"));
 
 	MyActorComponent = CreateDefaultSubobject<UMyActorComponent>(TEXT("MyActorComponent"));
 
+	static ConstructorHelpers::FClassFinder<AMyActor> RocketClass(TEXT("/Script/Engine.Blueprint'/Game/Airplane/Blueprint/CPP/BP_MyActor.BP_MyActor_C'"));
+	if (!RocketClass.Succeeded())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Failed"));
+	}
+	else
+	{
+		RocketTemplate = RocketClass.Class;
+	}
 
 }
 
@@ -117,6 +129,12 @@ void AMyPawn::EnhancedUnBoost(const FInputActionValue& Value)
 
 void AMyPawn::EnhancedFire(const FInputActionValue& Value)
 {
+	if (RocketTemplate != nullptr)
+	{
+		AActor* SpawnedActor = GetWorld()->SpawnActor<AActor>(RocketTemplate,
+			Arrow->GetComponentLocation(),
+			Arrow->GetComponentRotation());
+	}
 }
 
 void AMyPawn::EnhancedPitchAndRoll(const FInputActionValue& Value)

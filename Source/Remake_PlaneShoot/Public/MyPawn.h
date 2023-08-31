@@ -93,4 +93,7 @@ protected:
 	void EnhancedFire(const FInputActionValue& Value);
 
 	void EnhancedPitchAndRoll(const FInputActionValue& Value);
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Data")
+	TSubclassOf<class AMyActor> RocketTemplate;
 };
